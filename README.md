@@ -4,6 +4,8 @@ This fork has been customized to accomodate this Docker image to be used out of 
 
 Also the ldap admin password has changed so that it is easier to remember.
 
+This was created so it could be used with [this other repo to perform tests with any Confluence version](https://github.com/aruizca/docker-confluence-for-testing).
+
 # OpenLDAP Docker Image for testing
 
 ![Docker Build Status](https://img.shields.io/docker/build/rroemhild/test-openldap.svg) ![Docker Stars](https://img.shields.io/docker/stars/rroemhild/test-openldap.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/rroemhild/test-openldap.svg)
