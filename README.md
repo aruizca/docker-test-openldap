@@ -1,4 +1,4 @@
-⚠️ Important ⚠️
+⚠️ Important!! ⚠️
 =============
 This fork has been customized to accomodate this Docker image to be used out of the box as a testing user external directory for Atlassian Confluence. Mainly by introducing the confluence-users and confluence-administrators user groups.
 
