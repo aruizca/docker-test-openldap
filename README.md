@@ -1,3 +1,9 @@
+⚠️ Important ⚠️
+=============
+This fork has been customized to accomodate this Docker image to be used out of the box as a testing user external directory for Atlassian Confluence. Mainly by introducing the confluence-users and confluence-administrators user groups.
+
+Also the ldap admin password has changed so that it is easier to remember.
+
 # OpenLDAP Docker Image for testing
 
 ![Docker Build Status](https://img.shields.io/docker/build/rroemhild/test-openldap.svg) ![Docker Stars](https://img.shields.io/docker/stars/rroemhild/test-openldap.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/rroemhild/test-openldap.svg)
@@ -24,8 +30,8 @@ The Flask extension [flask-ldapconn][flaskldapconn] use this image for unit test
 ## Usage
 
 ```
-docker pull rroemhild/test-openldap
-docker run --privileged -d -p 389:389 rroemhild/test-openldap
+docker pull aruizca/confluence-test-ldap
+docker run --privileged -d -p 389:389 aruizca/confluence-test-ldap
 ```
 
 ## Exposed ports
@@ -40,6 +46,29 @@ docker run --privileged -d -p 389:389 rroemhild/test-openldap
 * /var/lib/ldap
 * /run/slapd
 
+## Confluence settings to sync LDAP repo
+In Confluence "General Configuration" go to "User Directories" section. There select "Add Directory" and choose "LDAP".
+
+ℹ️ Only the settings that require modification are shown:
+
+### Server Settings
+- Directory Type: OpenLDAP
+- Hostname: ldap (or whatever hostname used by the container)
+- Username: cn=admin,dc=planetexpress,dc=com
+- Password: password
+
+### LDAP Schema
+- Base DN: dc=planetexpress,dc=com
+
+### User Schema Settings
+- User Name Attribute: uid
+
+### Group Schema Settings
+- Group Object Class: Group
+- Group Object Filter: (objectclass=Group)
+
+### Membership Schema Settings
+- Group Members Attribute: member
 
 ## LDAP structure
 
@@ -47,7 +76,7 @@ docker run --privileged -d -p 389:389 rroemhild/test-openldap
 
 | Admin            | Secret           |
 | ---------------- | ---------------- |
-| cn=admin,dc=planetexpress,dc=com | GoodNewsEveryone |
+| cn=admin,dc=planetexpress,dc=com | password |
 
 ### ou=people,dc=planetexpress,dc=com
 
@@ -157,21 +186,23 @@ docker run --privileged -d -p 389:389 rroemhild/test-openldap
 | uid              | bender |
 | userPassword     | bender |
 
-### cn=admin_staff,ou=people,dc=planetexpress,dc=com
+### cn=confluence-administrators,ou=people,dc=planetexpress,dc=com
 
 | Attribute        | Value            |
 | ---------------- | ---------------- |
 | objectClass      | Group |
-| cn               | admin_staff |
+| cn               | confluence-administrators |
 | member           | cn=Hubert J. Farnsworth,ou=people,dc=planetexpress,dc=com |
 | member           | cn=Hermes Conrad,ou=people,dc=planetexpress,dc=com |
 
-### cn=ship_crew,ou=people,dc=planetexpress,dc=com
+### cn=confluence-users,ou=people,dc=planetexpress,dc=com
 
 | Attribute        | Value            |
 | ---------------- | ---------------- |
 | objectClass      | Group |
-| cn               | ship_crew |
+| cn               | confluence-users |
 | member           | cn=Turanga Leela,ou=people,dc=planetexpress,dc=com |
 | member           | cn=Philip J. Fry,ou=people,dc=planetexpress,dc=com |
 | member           | cn=Bender Bending Rodríguez,ou=people,dc=planetexpress,dc=com |
+| member           | cn=Amy Wong+sn=Kroker,ou=people,dc=planetexpress,dc=com |
+| member           | cn=John A. Zoidberg,ou=people,dc=planetexpress,dc=com#member: cn=Turanga Leela,ou=people,dc=planetexpress,dc=com

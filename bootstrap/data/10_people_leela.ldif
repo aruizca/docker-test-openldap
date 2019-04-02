@@ -6,6 +6,7 @@ objectClass: top
 cn: Turanga Leela
 sn: Turanga
 description: Mutant
+displayName: Leela
 employeeType: Captain
 employeeType: Pilot
 givenName: Leela
